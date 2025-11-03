@@ -8,9 +8,16 @@ function checkAndCreateFile(filePath) {
     console.log("File path is not defined.");
     return;
   }
-  fs.access(filePath, fs.constants.F_OK,(err)=>{
-    if(err){
-      fs.writeFile(filePath,'Sample Text')  
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      fs.writeFile(filePath, "Sample Text", (writeErr) => {
+        if (writeErr) {
+          throw writeErr;
+        }
+        console.log("File created");
+      });
+    } else {
+      console.log("File already exists.");
     }
   });
 }
